@@ -21,6 +21,10 @@ package object time {
     def >= (right: Instant): Boolean = left.compareTo(right) >= 0
 
     def <= (right: Instant): Boolean = left.compareTo(right) <= 0
+
+    def min (right: Instant): Instant = if (right < left) right else left
+
+    def max (right: Instant): Instant = if (right > left) right else left
   }
 
   implicit final class DurationExt(private val left: Duration) extends AnyVal {

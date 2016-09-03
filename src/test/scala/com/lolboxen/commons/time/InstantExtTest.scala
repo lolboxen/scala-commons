@@ -64,4 +64,12 @@ class InstantExtTest extends Spec {
   "a later date" must "not be less than or equal to an earlier date" in {
     EPOCH2 <= EPOCH shouldBe false
   }
+
+  "min" must "return the lesser of two dates" in {
+    EPOCH2 min EPOCH shouldBe EPOCH
+  }
+
+  "max" must "return the geater of two dates" in {
+    EPOCH2 max EPOCH shouldBe EPOCH2
+  }
 }
