@@ -8,6 +8,7 @@ import test.Spec
   * Created by trent ahrens on 3/9/16.
   */
 class DurationExtTest extends Spec with DurationImplicits {
+  import NumericDuration._
 
   val longer = ofSeconds(2)
   val shorter = ofSeconds(1)
