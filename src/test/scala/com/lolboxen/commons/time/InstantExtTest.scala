@@ -1,75 +1,102 @@
 package com.lolboxen.commons.time
 
 import java.time.Duration.ofSeconds
-import java.time.Instant.{EPOCH, ofEpochMilli}
+import java.time.Instant.{EPOCH, ofEpochSecond}
 
 import test.Spec
 
 /**
   * Created by trent ahrens on 3/8/16.
   */
-class InstantExtTest extends Spec {
+class InstantExtTest extends Spec with InstantImplicits {
 
-  val EPOCH2 = ofEpochMilli(2000)
+  val earlier = ofEpochSecond(1)
+  val later = ofEpochSecond(2)
+
+  val EPOCH2 = ofEpochSecond(2)
   val twoSeconds = ofSeconds(2)
 
-  "subtracting two instants" must "yield duration difference" in {
-    EPOCH2 - EPOCH shouldBe twoSeconds
-  }
+  behavior of "addition"
 
-  "subtracting duration from instant" must "adjust instant by duration amount" in {
-    EPOCH2 - twoSeconds shouldBe EPOCH
-  }
-
-  "adding duration to instant" must "adjust instant by duration amount" in {
+  it should "add duration to instant" in {
     EPOCH + twoSeconds shouldBe EPOCH2
   }
 
-  "a later date" must "be greater than an earlier date" in {
-    EPOCH2 > EPOCH shouldBe true
+  behavior of "subtraction"
+
+  it should "subtract two instants" in {
+    EPOCH2 - EPOCH shouldBe twoSeconds
   }
 
-  "an earlier date" must "not be greater than an earier date" in {
-    EPOCH > EPOCH2 shouldBe false
+  it should "subtract duration from instant" in {
+    EPOCH2 - twoSeconds shouldBe EPOCH
   }
 
-  "an earlier date" must "be less than a greater date" in {
-    EPOCH < EPOCH2 shouldBe true
+  behavior of "greater than"
+
+  it should "later > earlier" in {
+    later > earlier shouldBe true
   }
 
-  "a later date" must "not be earlier than a greater date" in {
-    EPOCH2 < EPOCH shouldBe false
+  it should "not earlier > later" in {
+    earlier > later shouldBe false
   }
 
-  "a later date" must "be greater than or equal to an earlier date" in {
-    EPOCH2 > EPOCH shouldBe true
+  behavior of "less than"
+
+  it should "later < earlier" in {
+    earlier < later shouldBe true
   }
 
-  "the same date" must "be greater than or equal to itself" in {
-    EPOCH >= EPOCH shouldBe true
+  it should "not earlier < later" in {
+    later < earlier shouldBe false
   }
 
-  "an earlier date" must "not be greater than or equal to a later date" in {
-    EPOCH >= EPOCH2 shouldBe false
+  behavior of "greater than equal to"
+
+  it should "later >= earlier" in {
+    later >= earlier shouldBe true
   }
 
-  "an earlier date" must "be less than or equal to a greater date" in {
-    EPOCH <= EPOCH2 shouldBe true
+  it should "same >= same" in {
+    earlier >= earlier shouldBe true
   }
 
-  "the same date" must "be less than or equal to itself" in {
-    EPOCH <= EPOCH shouldBe true
+  it should "not earlier >= later" in {
+    earlier >= later shouldBe false
   }
 
-  "a later date" must "not be less than or equal to an earlier date" in {
-    EPOCH2 <= EPOCH shouldBe false
+  behavior of "less than equal to"
+
+  it should "later <= earlier" in {
+    earlier <= later shouldBe true
   }
 
-  "min" must "return the lesser of two dates" in {
-    EPOCH2 min EPOCH shouldBe EPOCH
+  it should "same <= same" in {
+    earlier <= earlier shouldBe true
   }
 
-  "max" must "return the geater of two dates" in {
-    EPOCH2 max EPOCH shouldBe EPOCH2
+  it should "not earlier <= later" in {
+    later <= earlier shouldBe false
+  }
+
+  behavior of "min"
+
+  it should "pick lesser when listed descending" in {
+    later min earlier shouldBe earlier
+  }
+
+  it should "pick lesser when listed ascending" in {
+    earlier min later shouldBe earlier
+  }
+
+  behavior of "max"
+
+  it should "pick greater when listed descending" in {
+    later max earlier shouldBe later
+  }
+
+  it should "pick greater when listed ascending" in {
+    earlier max later shouldBe later
   }
 }

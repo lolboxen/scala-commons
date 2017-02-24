@@ -7,59 +7,74 @@ import test.Spec
 /**
   * Created by trent ahrens on 3/9/16.
   */
-class DurationExtTest extends Spec {
+class DurationExtTest extends Spec with DurationImplicits {
 
-  val twoSeconds = ofSeconds(2)
+  val longer = ofSeconds(2)
+  val shorter = ofSeconds(1)
 
-  "subtracting two duration" must "yield the difference as a duration" in {
-    twoSeconds - twoSeconds shouldBe ZERO
+  behavior of "subtraction"
+
+  it should "yield the difference as a duration" in {
+    longer - longer shouldBe ZERO
   }
 
-  "adding two durations" must "yield the sum as a duration" in {
-    twoSeconds + twoSeconds shouldBe ofSeconds(4)
+  behavior of "addition"
+
+  it should "yield the sum as a duration" in {
+    longer + longer shouldBe ofSeconds(4)
   }
 
-  "multiplying a duration with a number" must "yield the product as a duration" in {
-    twoSeconds * 3 shouldBe ofSeconds(6)
+  behavior of "multiplication"
+
+  it should "yield the product as a duration" in {
+    longer * 3 shouldBe ofSeconds(6)
   }
 
-  "a greater duration" must "be greater than a lesser duration" in {
-    twoSeconds > ZERO shouldBe true
+  behavior of "greater than"
+
+  it should "longer > shorter" in {
+    longer > shorter shouldBe true
   }
 
-  "a lesser duration" must "not be greater than a greater duration" in {
-    ZERO > twoSeconds shouldBe false
+  it should "not longer > shorter" in {
+    shorter > longer shouldBe false
   }
 
-  "a lesser duration" must "be less than a greater duration" in {
-    ZERO < twoSeconds shouldBe true
+  behavior of "less than"
+
+  it should "shorter < longer" in {
+    shorter < longer shouldBe true
   }
 
-  "a greater duration" must "not be less than a lesser duration" in {
-    twoSeconds < ZERO shouldBe false
+  it should "not shorter < longer" in {
+    longer < shorter shouldBe false
   }
 
-  "a greater duration" must "be greater than or equal to a lesser duration" in {
-    twoSeconds >= ZERO shouldBe true
+  behavior of "greater than equal to"
+
+  it should "longer >= shorter" in {
+    longer >= shorter shouldBe true
   }
 
-  "the same duration" must "be greater than or equal to itself" in {
-    twoSeconds >= twoSeconds shouldBe true
+  it should "same >= same" in {
+    shorter >= shorter shouldBe true
   }
 
-  "a lesser duration" must "not be greater than or equal to a greater duration" in {
-    ZERO >= twoSeconds shouldBe false
+  it should "not shorter >= longer" in {
+    shorter >= longer shouldBe false
   }
 
-  "a lesser duration" must "be less than or equal to a greater duration" in {
-    ZERO <= twoSeconds shouldBe true
+  behavior of "less than equal to"
+
+  it should "shorter <= longer" in {
+    shorter <= longer shouldBe true
   }
 
-  "the same duration" must "be less than or equal to itself" in {
-    twoSeconds <= twoSeconds shouldBe true
+  it should "same <= same" in {
+    shorter <= shorter shouldBe true
   }
 
-   "a greater duration" must "not be less than or equal a lesser duration" in {
-     twoSeconds <= ZERO shouldBe false
-   }
+  it should "not longer <= shorter" in {
+    longer <= shorter shouldBe false
+  }
 }
