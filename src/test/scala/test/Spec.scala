@@ -1,8 +1,9 @@
 package test
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 /**
   * Created by trent ahrens on 3/8/16.
   */
-trait Spec extends FlatSpec with Matchers
+trait Spec extends AnyFlatSpec with Matchers
