@@ -1,6 +1,7 @@
 package com.lolboxen.commons.time
 
 import java.time.Duration
+import scala.util.Try
 
 /**
   * Created by trent ahrens on 2/23/17.
@@ -26,5 +27,7 @@ trait DurationNumberImplicits {
     override def minus(x: Duration, y: Duration): Duration = x.minus(y)
 
     override def compare(x: Duration, y: Duration): Int = x.compareTo(y)
+
+    override def parseString(str: String): Option[Duration] = Try(Duration.parse(str)).toOption
   }
 }
